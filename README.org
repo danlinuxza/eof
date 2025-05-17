@@ -1,6 +1,6 @@
 #+TITLE: EOF Plot
-#+AUTHOR: Daniel Si
-#+DATE: <2023-10-01>
+#+AUTHOR: Daniel Simpson
+#+DATE: <2025-05-18 SAT>
 #+OPTIONS: toc:nil
 
 * Overview
