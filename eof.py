@@ -13,7 +13,7 @@ technologies = {
     "Keycloak": "https://endoflife.date/api/keycloak.json",
     "Nuxt": "https://endoflife.date/api/nuxt.json",
     "Spring Boot": "https://endoflife.date/api/spring-boot.json",
-    "Vuetify": "https://endoflife.date/api/vuetify.json"
+    "Vuetify": "https://endoflife.date/api/vuetify.json",
     "Proxmox": "https://endoflife.date/api/v1/products/proxmox-ve"
 }
 
