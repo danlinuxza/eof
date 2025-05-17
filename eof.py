@@ -23,43 +23,66 @@ selected_technology = st.selectbox('Select Technology', list(technologies.keys()
 # URL to fetch the JSON data for the selected technology
 json_url = technologies[selected_technology]
 
-try:
-    # Fetch the JSON data
-    response = requests.get(json_url)
-    response.raise_for_status()  # Raise an error for bad status codes
-    data = response.json()
+# Check if the selected technology is Proxmox
+if selected_technology == "Proxmox":
+    try:
+        # Fetch the JSON data for Proxmox
+        response = requests.get(technologies["Proxmox"])
+        response.raise_for_status()  # Raise an error for bad status codes
+        data = response.json()
 
-    # Convert JSON data to a DataFrame for easier manipulation
-    df = pd.DataFrame(data)
+        # Display the Proxmox-specific data
+        st.subheader(f'Information for {selected_technology}')
+        for item in data:
+            st.write(f"**Product:** {item.get('product', 'N/A')}")
+            st.write(f"**Version:** {item.get('version', 'N/A')}")
+            st.write(f"**Release Date:** {item.get('releaseDate', 'N/A')}")
+            st.write(f"**End-of-Life Date:** {item.get('eol', 'N/A')}")
+            st.write("---")
 
-    # Create a dropdown menu for selecting a version of the selected technology
-    versions = df['cycle'].tolist()
-    selected_version = st.selectbox('Select Version', versions)
+    except requests.exceptions.RequestException as e:
+        st.error(f"An error occurred while fetching the JSON data for Proxmox: {e}")
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
 
-    # Filter the DataFrame for the selected version
-    selected_data = df[df['cycle'] == selected_version]
+else:
+    try:
+        # Fetch the JSON data for other technologies
+        response = requests.get(json_url)
+        response.raise_for_status()  # Raise an error for bad status codes
+        data = response.json()
 
-    # Display information about the selected version
-    if not selected_data.empty:
-        st.subheader(f'Information for {selected_technology} Version {selected_version}')
-        for column in selected_data.columns:
-            st.write(f"**{column.capitalize()}:** {selected_data.iloc[0][column]}")
-    else:
-        st.error(f"No data found for version {selected_version}")
+        # Convert JSON data to a DataFrame for easier manipulation
+        df = pd.DataFrame(data)
 
-    # Add a chart to display all versions and highlight those with EOL set to true
-    st.subheader(f'End-of-Life Status for {selected_technology}')
-    df['eol'] = df['eol'].astype(bool)  # Ensure EOL is treated as a boolean
-    df['EOL Status'] = df['eol'].apply(lambda x: 'EOL' if x else 'Supported')
+        # Create a dropdown menu for selecting a version of the selected technology
+        versions = df['cycle'].tolist()
+        selected_version = st.selectbox('Select Version', versions)
 
-    fig = px.bar(df, x='cycle', y='releaseDate', color='EOL Status', 
-                 title=f'EOL Status for {selected_technology}',
-                 labels={'cycle': 'Version', 'releaseDate': 'Release Date'},
-                 color_discrete_map={'EOL': 'red', 'Supported': 'green'})
+        # Filter the DataFrame for the selected version
+        selected_data = df[df['cycle'] == selected_version]
 
-    st.plotly_chart(fig)
+        # Display information about the selected version
+        if not selected_data.empty:
+            st.subheader(f'Information for {selected_technology} Version {selected_version}')
+            for column in selected_data.columns:
+                st.write(f"**{column.capitalize()}:** {selected_data.iloc[0][column]}")
+        else:
+            st.error(f"No data found for version {selected_version}")
 
-except requests.exceptions.RequestException as e:
-    st.error(f"An error occurred while fetching the JSON data: {e}")
-except Exception as e:
-    st.error(f"An error occurred: {e}")
+        # Add a chart to display all versions and highlight those with EOL set to true
+        st.subheader(f'End-of-Life Status for {selected_technology}')
+        df['eol'] = df['eol'].astype(bool)  # Ensure EOL is treated as a boolean
+        df['EOL Status'] = df['eol'].apply(lambda x: 'EOL' if x else 'Supported')
+
+        fig = px.bar(df, x='cycle', y='releaseDate', color='EOL Status', 
+                     title=f'EOL Status for {selected_technology}',
+                     labels={'cycle': 'Version', 'releaseDate': 'Release Date'},
+                     color_discrete_map={'EOL': 'red', 'Supported': 'green'})
+
+        st.plotly_chart(fig)
+
+    except requests.exceptions.RequestException as e:
+        st.error(f"An error occurred while fetching the JSON data: {e}")
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
