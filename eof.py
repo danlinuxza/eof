@@ -14,6 +14,7 @@ technologies = {
     "Nuxt": "https://endoflife.date/api/nuxt.json",
     "Spring Boot": "https://endoflife.date/api/spring-boot.json",
     "Vuetify": "https://endoflife.date/api/vuetify.json"
+    "Proxmox": "https://endoflife.date/api/v1/products/proxmox-ve"
 }
 
 # Dropdown menu for selecting a technology
