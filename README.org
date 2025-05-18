@@ -1,24 +1,26 @@
 #+TITLE: EOF Plot
 #+AUTHOR: Daniel Simpson
 #+DATE: <2025-05-18 SAT>
-#+OPTIONS: toc:nil
+#+OPTIONS: toc:t
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
-* Overview
+
+** Overview
 This project is a Streamlit application that provides information about the end-of-life (EOL) status of various technologies. It fetches data from the EndOfLife API and visualizes it using interactive charts.
 
-* Features
+** Features
 - Select a technology from a dropdown menu.
 - View detailed information about specific versions.
 - Visualize EOL status with color-coded bar charts.
 
-* Requirements
+*** Requirements
 - Python 3.x
 - Streamlit
 - Requests
 - Pandas
 - Plotly
 
-* Usage
+*** Usage
 1. Run the application:
     ```bash
     streamlit run eof.py
@@ -26,5 +28,5 @@ This project is a Streamlit application that provides information about the end-
 2. Open the provided URL in your browser.
 3. Select a technology and explore its EOL information.
 
-* License
+*** License
 This project is licensed under the MIT License.
