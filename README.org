@@ -5,7 +5,7 @@
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 
-** Overview
+** Overview of Project
 This project is a Streamlit application that provides information about the end-of-life (EOL) status of various technologies. It fetches data from the EndOfLife API and visualizes it using interactive charts.
 
 ** Features
